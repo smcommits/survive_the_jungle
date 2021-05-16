@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import Phaser from 'phaser';
 
 /**
  * A class that wraps up our 2D platforming player logic. It creates, animates and moves a sprite in
@@ -9,30 +9,31 @@ export default class Player {
   constructor(scene, x, y) {
     this.scene = scene;
 
-
-     const anims = scene.anims;
+    const { anims } = scene;
     anims.create({
-      key: "player-idle",
-      frames: anims.generateFrameNumbers("player", { start: 0, end: 3 }),
+      key: 'player-idle',
+      frames: anims.generateFrameNumbers('player', { start: 0, end: 3 }),
       frameRate: 3,
-      repeat: -1
+      repeat: -1,
     });
     anims.create({
-      key: "player-run",
-      frames: anims.generateFrameNumbers("player", { start: 8, end: 15 }),
+      key: 'player-run',
+      frames: anims.generateFrameNumbers('player', { start: 8, end: 15 }),
       frameRate: 12,
-      repeat: -1
+      repeat: -1,
     });
 
-      // Create the physics-based sprite that we will move around and animate
+    // Create the physics-based sprite that we will move around and animate
     this.sprite = scene.physics.add
-      .sprite(x, y, "player", 0)
+      .sprite(x, y, 'player', 0)
       .setBounce(0.2)
       .setDrag(1000, 0)
-      .setMaxVelocity(300, 1000)
+      .setMaxVelocity(300, 1000);
 
     // Track the arrow keys & WASD
-    const { LEFT, RIGHT, UP, W, A, D, SPACE} = Phaser.Input.Keyboard.KeyCodes;
+    const {
+      LEFT, RIGHT, UP, W, A, D, SPACE,
+    } = Phaser.Input.Keyboard.KeyCodes;
     this.keys = scene.input.keyboard.addKeys({
       left: LEFT,
       right: RIGHT,
@@ -40,7 +41,7 @@ export default class Player {
       w: W,
       a: A,
       d: D,
-      space: SPACE
+      space: SPACE,
     });
   }
 
@@ -77,11 +78,11 @@ export default class Player {
 
     // Update the animation/texture based on the state of the player
     if (onGround) {
-      if (sprite.body.velocity.x !== 0) sprite.anims.play("player-run", true);
-      else sprite.anims.play("player-idle", true);
+      if (sprite.body.velocity.x !== 0) sprite.anims.play('player-run', true);
+      else sprite.anims.play('player-idle', true);
     } else {
       sprite.anims.stop();
-      sprite.setTexture("player", 10);
+      sprite.setTexture('player', 10);
     }
   }
 
@@ -89,4 +90,3 @@ export default class Player {
     this.sprite.destroy();
   }
 }
-

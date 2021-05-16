@@ -40,10 +40,10 @@ export default class GameScene extends Phaser.Scene {
     const platformTileset = map.addTilesetImage('platformTileset', 'platformImage');
 
     // layer creation
-    this.backdropLayer = map.createLayer('backdropLayer', backdropTileset, 0, 0);
-    this.backdropOneLayer = map.createLayer('backdropOneLayer', backdropOneTileset, 0, 0);
-    this.backdropTwoLayer = map.createLayer('backdropTwoLayer', backdropTwoTileset);
-    this.platformLayer = map.createLayer('platformLayer', platformTileset, 0, 0);
+    const backdropLayer = map.createLayer('backdropLayer', backdropTileset, 0, 0);
+    const backdropOneLayer = map.createLayer('backdropOneLayer', backdropOneTileset, 0, 0);
+    const backdropTwoLayer = map.createLayer('backdropTwoLayer', backdropTwoTileset);
+    const platformLayer = map.createLayer('platformLayer', platformTileset, 0, 0);
     const collectibleLayer = map.getObjectLayer('collectibles').objects;
 
     const oranges = this.physics.add.staticGroup();
@@ -58,8 +58,8 @@ export default class GameScene extends Phaser.Scene {
 
     this.player = new Player(this, 20, 0);
 
-    this.platformLayer.setCollisionByExclusion(-1, true);
-    this.physics.add.collider(this.player.sprite, this.platformLayer);
+    platformLayer.setCollisionByExclusion(-1, true);
+    this.physics.add.collider(this.player.sprite, platformLayer);
 
     this.spikes = this.physics.add.group({
       allowGravity: false,
@@ -79,7 +79,9 @@ export default class GameScene extends Phaser.Scene {
 
    
 
-    this.physics.add.overlap(this.player.sprite, oranges, collectCoin, null, this);
+    this.physics.add.overlap(this.player, oranges, function(player, oranges){
+      console.log("this");
+    }, null, this);
 
     this.cameras.main.startFollow(this.player.sprite);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -91,8 +93,8 @@ export default class GameScene extends Phaser.Scene {
     this.player.update();
 
      if (
-      this.player.sprite.y > this.platformLayer.height ||
-      this.physics.world.overlap(this.player.sprite, this.spikes)
+      this.player.sprite.y > this.groundLayer.height ||
+      this.physics.world.overlap(this.player.sprite, this.spikeGroup)
     ) {
       // Flag that the player is dead so that we can stop update from running in the future
       this.isPlayerDead = true;
@@ -103,6 +105,7 @@ export default class GameScene extends Phaser.Scene {
 
       // Freeze the player to leave them on screen while fading but remove the marker immediately
       this.player.freeze();
+      this.marker.destroy();
 
       cam.once("camerafadeoutcomplete", () => {
         this.player.destroy();
@@ -110,14 +113,7 @@ export default class GameScene extends Phaser.Scene {
       });
     }
   }
-  
 }
-
-function collectCoin(player, oranges) {
-    oranges.destroy(oranges.x, oranges.y); // remove the tile/coin
-    return false;
-}
-
 
 
 

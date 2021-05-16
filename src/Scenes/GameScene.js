@@ -31,77 +31,91 @@ export default class GameScene extends Phaser.Scene {
 
   create() {
     this.isPlayerDead = false;
-    const map = this.make.tilemap({ key: 'map' });
-
-    // tilset creation
-    const backdropTileset = map.addTilesetImage('backdropTileset', 'backdropImage');
-    const backdropOneTileset = map.addTilesetImage('backdropOneTileset', 'backdropOneImage');
-    const backdropTwoTileset = map.addTilesetImage('backdropTwo', 'backdropTwoImage');
-    const platformTileset = map.addTilesetImage('platformTileset', 'platformImage');
-
-    // layer creation
-    this.backdropLayer = map.createLayer('backdropLayer', backdropTileset, 0, 0);
-    this.backdropOneLayer = map.createLayer('backdropOneLayer', backdropOneTileset, 0, 0);
-    this.backdropTwoLayer = map.createLayer('backdropTwoLayer', backdropTwoTileset);
-    this.platformLayer = map.createLayer('platformLayer', platformTileset, 0, 0);
-    const collectibleLayer = map.getObjectLayer('collectibles').objects;
-
-    const oranges = this.physics.add.staticGroup();
-
-    collectibleLayer.forEach((object) => {
-      const obj = oranges.create(object.x, object.y, 'collectible');
-      obj.setScale(object.width/32, object.height/32);
-      obj.setOrigin(-.2, 1);
-      obj.body.width = object.width;
-      obj.body.height = object.height;
-    });
-
+    this.map = this.make.tilemap({ key: 'map' });
+    this.createTileset()
+    this.createLayer()
     this.player = new Player(this, 20, 0);
+    this.createPhysicsGroups()
+    this.createCollectibles()
+    this.createSpikes()
+    this.createCollisions()
+    this.createCameraConfig()
+  }
+ 
+  update(time, delta) {
+    if (this.isPlayerDead) return;
+    this.player.update();
+    this.checkForDeath();
+  }
 
-    this.platformLayer.setCollisionByExclusion(-1, true);
-    this.physics.add.collider(this.player.sprite, this.platformLayer);
+  createTileset() {
+    this.backdropTileset = this.map.addTilesetImage('backdropTileset', 'backdropImage');
+    this.backdropOneTileset = this.map.addTilesetImage('backdropOneTileset', 'backdropOneImage');
+    this.backdropTwoTileset = this.map.addTilesetImage('backdropTwoTileset', 'backdropTwoImage');
+    this.platformTileset = this.map.addTilesetImage('platformTileset', 'platformImage');
+  }
 
+  createLayer() {
+    this.backdropLayer = this.map.createLayer('backdropLayer', this.backdropTileset, 0, 0);
+    this.backdropOneLayer = this.map.createLayer('backdropOneLayer', this.backdropOneTileset, 0, 0);
+    this.backdropTwoLayer = this.map.createLayer('backdropTwoLayer', this.backdropTwoTileset);
+    this.platformLayer = this.map.createLayer('platformLayer', this.platformTileset, 0, 0);
+    this.collectibleLayer = this.map.getObjectLayer('collectibles').objects;
+    this.spikeObjects = this.map.getObjectLayer('spikes').objects;
+  }
+
+  createPhysicsGroups() {
+
+    this.oranges = this.physics.add.staticGroup(); 
     this.spikes = this.physics.add.group({
       allowGravity: false,
       immovable: true
     });
 
-    const spikeObjects = map.getObjectLayer('spikes')['objects'];
-    
-    spikeObjects.forEach(spikeObject => {
-      // Add new spikes to our sprite group, change the start y position to meet the platform
+
+  }
+
+  createCollectibles() {
+    this.collectibleLayer.forEach((object) => {
+      const obj = this.oranges.create(object.x, object.y, 'collectible');
+      obj.setScale(object.width/32, object.height/32);
+      obj.setOrigin(-.2, 1);
+      obj.body.width = object.width;
+      obj.body.height = object.height;
+    });
+  }
+
+  createSpikes() {
+    this.spikeObjects.forEach(spikeObject => {
       const spike = this.spikes.create(spikeObject.x, spikeObject.y - 10, 'spike').setOrigin(0, 0);
     });
-    
-
-
-
-
-   
-
-    this.physics.add.overlap(this.player.sprite, oranges, collectCoin, null, this);
-
-    this.cameras.main.startFollow(this.player.sprite);
-    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
   }
- 
-  update(time, delta) {
-    if (this.isPlayerDead) return;
 
-    this.player.update();
+  createCollisions(){
 
-     if (
+     this.platformLayer.setCollisionByExclusion(-1, true);
+     this.physics.add.collider(this.player.sprite, this.platformLayer);
+    this.physics.add.overlap(this.player.sprite, this.oranges, collectCoin, null, this);
+
+  }
+
+  createCameraConfig() {
+    this.cameras.main.startFollow(this.player.sprite);
+    this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+  }
+
+  checkForDeath() {
+
+    if (
       this.player.sprite.y > this.platformLayer.height ||
       this.physics.world.overlap(this.player.sprite, this.spikes)
     ) {
-      // Flag that the player is dead so that we can stop update from running in the future
       this.isPlayerDead = true;
 
       const cam = this.cameras.main;
       cam.shake(100, 0.05);
       cam.fade(250, 0, 0, 0);
 
-      // Freeze the player to leave them on screen while fading but remove the marker immediately
       this.player.freeze();
 
       cam.once("camerafadeoutcomplete", () => {
@@ -109,8 +123,9 @@ export default class GameScene extends Phaser.Scene {
         this.scene.restart();
       });
     }
+
   }
-  
+
 }
 
 function collectCoin(player, oranges) {

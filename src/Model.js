@@ -18,7 +18,7 @@ export default class Model {
     this._soundOn = value;
   }
 
-  set playerName(value){
+  set playerName(value) {
     this._playerName = value;
   }
 

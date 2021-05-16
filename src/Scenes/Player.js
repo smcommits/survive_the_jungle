@@ -8,7 +8,8 @@ import Phaser from 'phaser';
 export default class Player {
   constructor(scene, x, y) {
     this.scene = scene;
-
+    this.score = 0;
+    this.name = this.scene.game.globals.model.playerName;
     const { anims } = scene;
     anims.create({
       key: 'player-idle',
@@ -83,5 +84,12 @@ export default class Player {
 
   destroy() {
     this.sprite.destroy();
+  }
+
+  jsonifyData() {
+    return {
+      user: this.name,
+      score: this.score,
+    };
   }
 }

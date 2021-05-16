@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --mode development --open",
-    "test": "jest"
+    "start": "node src/index.js",
+    "build": "webpack"
+  }
+
+
   },
   "author": "",
   "license": "ISC",

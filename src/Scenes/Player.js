@@ -54,11 +54,8 @@ export default class Player {
     const onGround = sprite.body.blocked.down;
     const acceleration = onGround ? 600 : 200;
 
-    // Apply horizontal acceleration when left/a or right/d are applied
     if (keys.left.isDown || keys.a.isDown) {
       sprite.setAccelerationX(-acceleration);
-      // No need to have a separate set of graphics for running to the left & to the right. Instead
-      // we can just mirror the sprite.
       sprite.setFlipX(true);
     } else if (keys.right.isDown || keys.d.isDown) {
       sprite.setAccelerationX(acceleration);
@@ -67,7 +64,6 @@ export default class Player {
       sprite.setAccelerationX(0);
     }
 
-    // Only allow the player to jump if they are on the ground
     if (onGround && (keys.up.isDown || keys.w.isDown)) {
       sprite.setVelocityY(-500);
     }
@@ -76,7 +72,6 @@ export default class Player {
       sprite.setVelocityY(-1000);
     }
 
-    // Update the animation/texture based on the state of the player
     if (onGround) {
       if (sprite.body.velocity.x !== 0) sprite.anims.play('player-run', true);
       else sprite.anims.play('player-idle', true);

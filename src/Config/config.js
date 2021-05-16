@@ -1,9 +1,9 @@
-import 'phaser';
+import Phaser from 'phaser';
 
 export default {
   type: Phaser.AUTO,
-  width: 800,
-  height: 1280,
+  width: 1000,
+  height: 640,
   parent: 'game-container',
   pixelArt: true,
   backgroundColor: '#1d212d',
@@ -12,5 +12,8 @@ export default {
     arcade: {
       gravity: { y: 1000 },
     },
+  },
+  dom: {
+    createContainer: true
   },
 };

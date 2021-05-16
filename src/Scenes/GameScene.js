@@ -1,4 +1,4 @@
-import 'phaser';
+import Phaser from 'phaser';
 
 import Player from './Player';
 
@@ -32,17 +32,17 @@ export default class GameScene extends Phaser.Scene {
   create() {
     this.isPlayerDead = false;
     this.map = this.make.tilemap({ key: 'map' });
-    this.createTileset()
-    this.createLayer()
+    this.createTileset();
+    this.createLayer();
     this.player = new Player(this, 20, 0);
-    this.createPhysicsGroups()
-    this.createCollectibles()
-    this.createSpikes()
-    this.createCollisions()
-    this.createCameraConfig()
+    this.createPhysicsGroups();
+    this.createCollectibles();
+    this.createSpikes();
+    this.createCollisions();
+    this.createCameraConfig();
   }
- 
-  update(time, delta) {
+
+  update() {
     if (this.isPlayerDead) return;
     this.player.update();
     this.checkForDeath();
@@ -65,38 +65,33 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createPhysicsGroups() {
-
-    this.oranges = this.physics.add.staticGroup(); 
+    this.oranges = this.physics.add.staticGroup();
     this.spikes = this.physics.add.group({
       allowGravity: false,
-      immovable: true
+      immovable: true,
     });
-
-
   }
 
   createCollectibles() {
     this.collectibleLayer.forEach((object) => {
       const obj = this.oranges.create(object.x, object.y, 'collectible');
-      obj.setScale(object.width/32, object.height/32);
-      obj.setOrigin(-.2, 1);
+      obj.setScale(object.width / 32, object.height / 32);
+      obj.setOrigin(-0.2, 1);
       obj.body.width = object.width;
       obj.body.height = object.height;
     });
   }
 
   createSpikes() {
-    this.spikeObjects.forEach(spikeObject => {
-      const spike = this.spikes.create(spikeObject.x, spikeObject.y - 10, 'spike').setOrigin(0, 0);
+    this.spikeObjects.forEach((spikeObject) => {
+      this.spikes.create(spikeObject.x, spikeObject.y - 10, 'spike').setOrigin(0, 0);
     });
   }
 
-  createCollisions(){
-
-     this.platformLayer.setCollisionByExclusion(-1, true);
-     this.physics.add.collider(this.player.sprite, this.platformLayer);
+  createCollisions() {
+    this.platformLayer.setCollisionByExclusion(-1, true);
+    this.physics.add.collider(this.player.sprite, this.platformLayer);
     this.physics.add.overlap(this.player.sprite, this.oranges, collectCoin, null, this);
-
   }
 
   createCameraConfig() {
@@ -105,10 +100,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   checkForDeath() {
-
     if (
-      this.player.sprite.y > this.platformLayer.height ||
-      this.physics.world.overlap(this.player.sprite, this.spikes)
+      this.player.sprite.y > this.platformLayer.height
+      || this.physics.world.overlap(this.player.sprite, this.spikes)
     ) {
       this.isPlayerDead = true;
 
@@ -118,21 +112,15 @@ export default class GameScene extends Phaser.Scene {
 
       this.player.freeze();
 
-      cam.once("camerafadeoutcomplete", () => {
+      cam.once('camerafadeoutcomplete', () => {
         this.player.destroy();
         this.scene.restart();
       });
     }
-
   }
-
 }
 
 function collectCoin(player, oranges) {
-    oranges.destroy(oranges.x, oranges.y); // remove the tile/coin
-    return false;
+  oranges.destroy(oranges.x, oranges.y); // remove the tile/coin
+  return false;
 }
-
-
-
-

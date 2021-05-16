@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
-import { getLeaderboardData, parseData } from '../API/Leaderboard';
+import { parseData } from '../API/Leaderboard';
 import config from '../Config/config';
-import Button from '../Objects/Button'
+import Button from '../Objects/Button';
 
 export default class ScoreBoard extends Phaser.Scene {
   constructor() {
@@ -12,7 +12,6 @@ export default class ScoreBoard extends Phaser.Scene {
     this.header = this.add.text(config.width * 0.45, config.height * 0.20, 'ScoreBoard');
     this.showData();
     this.createMainButton();
-
   }
 
   async showData() {
@@ -25,6 +24,6 @@ export default class ScoreBoard extends Phaser.Scene {
   }
 
   createMainButton() {
-    this.gameButton = new Button(this, config.width / 2, config.height * .70, 'blueButton1', 'blueButton2', 'Main Menu', 'Boot');
+    this.gameButton = new Button(this, config.width / 2, config.height * 0.70, 'blueButton1', 'blueButton2', 'Main Menu', 'Boot');
   }
 }

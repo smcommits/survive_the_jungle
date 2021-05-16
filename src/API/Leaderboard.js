@@ -1,14 +1,14 @@
 import axios from 'axios';
 
 const postData = async (data) => {
-  const response = await axios.post('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/WV10lUazjzNF0libG6nq/scores/', data)
-    .then(response => response.data).catch(error => error);
+  await axios.post('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/WV10lUazjzNF0libG6nq/scores/', data)
+    .then((response) => response.data).catch((error) => error);
   return data.result;
 };
 
 const getLeaderboardData = async () => {
   const response = await axios.get('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/WV10lUazjzNF0libG6nq/scores/')
-    .then(response => response.data.result).catch(error => error);
+    .then((response) => response.data.result).catch((error) => error);
   return response;
 };
 
@@ -19,5 +19,4 @@ const parseData = async () => {
     .slice(0, 5);
 };
 
-
-export {postData, getLeaderboardData, parseData};
+export { postData, getLeaderboardData, parseData };

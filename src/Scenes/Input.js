@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import config from '../Config/config';
-import Button from '../Objects/Button';
 
 export default class Input extends Phaser.Scene {
   constructor() {

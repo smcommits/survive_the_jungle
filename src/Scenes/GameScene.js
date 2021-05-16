@@ -92,7 +92,7 @@ export default class GameScene extends Phaser.Scene {
   createCollisions() {
     this.platformLayer.setCollisionByExclusion(-1, true);
     this.physics.add.collider(this.player.sprite, this.platformLayer);
-    this.physics.add.overlap(this.player.sprite, this.oranges, collectCoin, null, this);
+    this.physics.add.overlap(this.player.sprite, this.oranges, this.collectCoin, null, this);
   }
 
   createCameraConfig() {
@@ -134,11 +134,11 @@ export default class GameScene extends Phaser.Scene {
 
     this.nameText = this.add.text(800, 16, `Name: ${this.player.name}`).setScrollFactor(0);
   }
-}
 
-function collectCoin(player, oranges) {
-  oranges.destroy(oranges.x, oranges.y);
-  this.player.score += 10;
-  this.scoreText.setText(`Score: ${this.player.score}`);
-  return false;
+  collectCoin(player, oranges) {
+    oranges.destroy(oranges.x, oranges.y);
+    this.player.score += 10;
+    this.scoreText.setText(`Score: ${this.player.score}`);
+    return false;
+  }
 }

@@ -1,4 +1,6 @@
-import 'phaser';
+/* eslint radix: 0 */
+
+import Phaser from 'phaser';
 
 export default class PreloaderScene extends Phaser.Scene {
   constructor() {
@@ -86,8 +88,8 @@ export default class PreloaderScene extends Phaser.Scene {
 
   ready() {
     this.scene.start('Title');
-    this.readyCount++;
-    if (this.readyCount === 2) {
+    this.readyCount += 1;
+    if (this.readyCount === 4) {
       this.scene.start('Title');
     }
   }

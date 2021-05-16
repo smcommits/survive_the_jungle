@@ -1,12 +1,49 @@
-import 'axios';
-import {postData} from '../API/Leaderboard'
-
+import axios from 'axios';
+ 
+import { getLeaderboardData, parseData, postData } from '../API/Leaderboard';
+ 
 jest.mock('axios');
-test('should succesfully send data using post method and record the user score', async () => {
-  const responseData = {data: { result: 'Leaderboard score created correctly' }};
-  axios.post.mockResolvedValue(returnData);
-  const response = await postData('test', 80);
-  expect(response).toEqual('Leaderboard score created correctly');
+ 
+describe('getLeaderboardData', () => {
+  it('fetches successfully data from an API', async () => {
+    const data = {
+      data: {
+        hits: [
+          {
+            objectID: '1',
+            title: 'a',
+          },
+          {
+            objectID: '2',
+            title: 'b',
+          },
+        ],
+      },
+    };
+ 
+    axios.get.mockImplementationOnce(() => Promise.resolve(data));
+  });
+ 
+  it('fetches erroneously data from an API', async () => {
+    const errorMessage = 'Network Error';
+ 
+    axios.get.mockImplementationOnce(() =>
+      Promise.reject(new Error(errorMessage)),
+    );
+  });
 });
+
+describe('getLeaderboardData', () => {
+  it('fails to fetch unmatched data', async () => {
+    const data = undefined;
+ 
+    axios.get.mockImplementationOnce(() => Promise.resolve(data));
+ 
+    await expect(getLeaderboardData()).resolves.toEqual(data);
+  });
+ 
+});
+
+
 
 

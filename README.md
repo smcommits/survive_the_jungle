@@ -20,7 +20,7 @@
 Survive the jungle is a 2D platformer game. The game comes with basic features like collectible items and lethal obstacles. 
 
 ## Live Demo
-[Click here](https://git.heroku.com/secure-wave-51664.git) to visit the live demo of the application. 
+[Click here](https://dry-fortress-25033.herokuapp.com/) to visit the live demo of the application. 
 
 Note: The application is hosted on the free tier of Heroku and therefore the images attached will not persist after the next dyno reset. 
 

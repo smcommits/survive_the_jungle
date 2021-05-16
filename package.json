@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "npm run build && webpack-dev-server --host=0.0.0.0 ",
     "build": "webpack --mode production",
     "dev": "webpack serve"
   },
@@ -38,5 +38,6 @@
     "express": "^4.17.1",
     "phaser": "^3.54.0",
     "regenerator": "^0.14.7"
-  }
+  },
+  "heroku-run-build-script": true
 }

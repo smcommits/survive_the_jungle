@@ -29,6 +29,6 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
-    "phaser": "^3.0.0"
+    "phaser": "^3.54.0"
   }
 }

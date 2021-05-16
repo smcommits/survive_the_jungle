@@ -6,10 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "build": "webpack"
-  }
-
-
-  },
+  }, 
   "author": "",
   "license": "ISC",
   "devDependencies": {

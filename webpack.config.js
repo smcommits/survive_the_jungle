@@ -1,13 +1,12 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: ['babel-polyfill', './src/index.js'],
   devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js'
+    filename: 'main.js',
   },
 
   module: {
@@ -30,15 +29,13 @@ module.exports = {
       patterns: [
         {
           from: path.resolve(__dirname, 'assets', '**', '*'),
-          to: path.resolve(__dirname, 'dist')
-        }  
-      ]
-    }), 
+          to: path.resolve(__dirname, 'dist'),
+        },
+      ],
+    }),
   ],
 
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
-  }
-}
-
-
+  },
+};

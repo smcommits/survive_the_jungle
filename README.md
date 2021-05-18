@@ -95,6 +95,28 @@ can fail to grab support. Falling down or outside of the world. Which will resul
 - To move your player, you can use arrow keys or w, a, s, d, to move forward, left, backward, and rightwards respectively. 
 - To take the long jumps, you will have to press Spacebar. 
 
+
+## Built With
+
+- Javascript
+
+### Additional Technologies Used
+
+- Phaser Game Library
+- Webpack for bundling code
+- Babel for Transpiling code
+- Jest for testing code
+
+## Testing
+
+As mentioned above, the application uses jest as a primary test runner. To run tests on your local machine, please follow the instructions mentioned below. 
+
+- Navigate the project directory
+- Run the following command
+```
+npm test
+```
+
 ## Authors
 
 👤 **Anas Siddiqui**

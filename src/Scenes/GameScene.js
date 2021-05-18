@@ -107,7 +107,9 @@ export default class GameScene extends Phaser.Scene {
     ) {
       this.isPlayerDead = true;
 
-      postData(this.player.jsonifyData());
+      if (this.player.score > 0) {
+        postData(this.player.jsonifyData());
+      }
 
       const cam = this.cameras.main;
       cam.shake(100, 0.05);

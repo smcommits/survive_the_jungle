@@ -40,3 +40,16 @@ describe('getLeaderboardData', () => {
     await expect(getLeaderboardData()).resolves.toEqual(data);
   });
 });
+
+describe('postData', () => {
+  it('should set the data of the user and its score', async () => {
+    const responseData = { data: { result: 'Leaderboard score created correctly.' } };
+    axios.post.mockResolvedValue(responseData);
+  });
+
+  it('should recieve proper error when data is empty', async () => {
+    const responseData = { data: { message: 'You need to provide a valid user for the score' } };
+
+    axios.post.mockImplementationOnce(() => Promise.resolve(responseData));
+  });
+});

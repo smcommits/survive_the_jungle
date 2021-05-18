@@ -6,6 +6,11 @@ const postData = async (data) => {
   return data.result;
 };
 
+const setData = async (data) => {
+  const message = await postData(data);
+  return message;
+};
+
 const getLeaderboardData = async () => {
   const response = await axios.get('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/WV10lUazjzNF0libG6nq/scores/')
     .then((response) => response.data.result).catch((error) => error);
@@ -19,4 +24,6 @@ const parseData = async () => {
     .slice(0, 5);
 };
 
-export { postData, getLeaderboardData, parseData };
+export {
+  postData, getLeaderboardData, parseData, setData,
+};

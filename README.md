@@ -17,10 +17,10 @@
 ---
 
 ## About
-Survive the jungle is a 2D platformer game. The game comes with basic features like collecticlbe items and lethal obstacles. 
+Survive the jungle is a 2D platformer game. The game comes with basic features like collectible items and lethal obstacles. 
 
 ## Live Demo
-[Click here](https://herokuapp.com) to visit the live demo of the application. 
+[Click here](https://dry-fortress-25033.herokuapp.com/) to visit the live demo of the application. 
 
 Note: The application is hosted on the free tier of Heroku and therefore the images attached will not persist after the next dyno reset. 
 
@@ -33,7 +33,7 @@ The Game Design Document is a highly descriptive design manual for a video game.
 
 ### Prerequisites
 
-Prior to running the application locally the user will have to make sure of the following:
+Before running the application locally, the user will have to make sure of the following:
 - Node JS Installed on your local machine. Please use [this link](https://nodejs.org/en/).
 - Installing NPM if not already installed.
 
@@ -78,13 +78,13 @@ Alternatively, you can navigate to the dist folder and run index.html directly i
 ## Game Rules
 
 The Game rules are pretty simple.
-- You will be spawned in a 2D platorm game. 
-- You have to run and reach to the end of the jungle. 
+- You will be spawned in a 2D platform game. 
+- You have to run and reach the end of the jungle. 
 - While running, you have to collect the fruits. Which will help you score points. 
 - You will also have to avoid the spikes. They will result in instant death
 - Each fruit gives you 10 points. 
 - You can take small jumps and long jumps. 
-- Please note, although taking long jumps can help you it comes with it's own limitaions. After a long jump, player might fall with a lot of speed and
+- Please note, although taking long jumps can help you it comes with its limitations. After a long jump, the player might fall with a lot of speed and
 can fail to grab support. Falling down or outside of the world. Which will result in death. 
 
 
@@ -92,7 +92,7 @@ can fail to grab support. Falling down or outside of the world. Which will resul
 
 - After launching the game, you will be asked to enter your name. 
 - After you have entered the game, you will be spawned in a 2D world. 
-- To move your player, you can use arrow keys or w, a, s d, to move forward, left, backward, and righwards respectively. 
+- To move your player, you can use arrow keys or w, a, s, d, to move forward, left, backward, and rightwards respectively. 
 - To take the long jumps, you will have to press Spacebar. 
 
 ## Authors
